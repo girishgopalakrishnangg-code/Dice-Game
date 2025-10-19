@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dice Game</title>
+  <style>
+    #diceContainer {
+      font-size: 50px;
+      margin: 20px 0;
+    }
+    #result {
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <button id="rollButton">Roll Dice</button>
+  <div id="diceContainer"></div>
+  <div id="result"></div>
+
+  <script>
+    const diceEmoji = ["🎲1","🎲2","🎲3","🎲4","🎲5","🎲6"];
+
+    function rollDice() {
+      const dice = [];
+      // Roll 4 dice
+      for (let i = 0; i < 4; i++) {
+        dice.push(Math.floor(Math.random() * 6) + 1);
+      }
+
+      // Count occurrences
+      const counts = {};
+      for (let die of dice) {
+        counts[die] = (counts[die] || 0) + 1;
+      }
+
+      // Check for 3 or 4 of a kind
+      const isWin = Object.values(counts).some(count => count >= 3);
+
+      // Display dice visually
+      const diceVisual = dice.map(d => diceEmoji[d-1]).join(" ");
+      document.getElementById("diceContainer").textContent = diceVisual;
+
+      // Display result message
+      document.getElementById("result").textContent = isWin
+        ? "🎉 Congratulations! You got 3 or 4 of a kind!"
+        : "No match of 3 or 4 dice.";
+    }
+
+    document.getElementById("rollButton").addEventListener("click", rollDice);
+  </script>
+</body>
+</html>
